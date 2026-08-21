@@ -10,11 +10,16 @@ tasks = [
     {"id": 3, "title": "Deploy application", "completed": False}
 ]
 
+@app.get("/api/health")
+def health():
+    return jsonify({
+        "status": "healthy",
+        "service": "azure-3tier-api"
+    })
 
 @app.get("/api/tasks")
 def get_tasks():
     return jsonify(tasks)
-
 
 @app.post("/api/tasks")
 def create_task():
@@ -29,15 +34,3 @@ def create_task():
     tasks.append(task)
 
     return jsonify(task), 201
-
-
-@app.get("/api/health")
-def health():
-    return jsonify({
-        "status": "healthy",
-        "service": "azure-3tier-api"
-    })
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
